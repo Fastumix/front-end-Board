@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Header, Registration } from '../components'
+import { Header, Main } from '../components'
 import { View } from 'react-native'
 import styles from '../styles/search'
 
@@ -8,7 +8,7 @@ export class RegistrationPage extends Component {
     return (
       <View style={styles.container}>
         <Header/>
-        <Registration/>
+        <Main/>
       </View>
     )
   }

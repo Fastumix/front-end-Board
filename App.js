@@ -1,18 +1,36 @@
+// Ваш головний файл (наприклад, index.js)
+
+import React from 'react';
 import { View } from 'react-native';
-import styles from './styles/search'
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import RegistrationPage from './app/RegistrationPage';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';  
 import LoginPage from './app/LoginPage';
+import RegistrationPage from './app/RegistrationPage'
+import styles from './styles/search';
+import MainPage from './app/MainPage';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
-export default function App() {
+const App = () => {
   return (
-    <View style={styles.container}>
-      <LoginPage/>
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="LoginPage"
+          component={LoginPage}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+        name="RegistrationPage" component={RegistrationPage}
+        options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+        name="MainPage" component={MainPage}
+        options={{ headerShown: false }} 
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
-}
+};
 
-
+export default App;
