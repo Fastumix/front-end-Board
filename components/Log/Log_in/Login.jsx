@@ -13,6 +13,11 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const auth = FIREBASE_AUTH
 
+
+  
+
+
+
   const handleLogin = async () => {
     setLoading(true);
     try {
@@ -49,8 +54,9 @@ const Login = () => {
       <TouchableOpacity
         style={styles.Button}
         onPress={handleLogin}
+        
       >
-        <Text style={{ fontWeight: 500 }}>
+        <Text style={{ fontWeight: 500}}>
           Увійти
         </Text>
       </TouchableOpacity>
@@ -64,12 +70,12 @@ const Login = () => {
       </TouchableOpacity>
 
       <View style={styles.RegisterContainer}>
-        <Text style={{ color: '#D9D9D9', fontSize: 12, textAlign: 'center' }}>
+        <Text style={{ color: '#D9D9D9', fontSize: 12, textAlign: 'center'}}>
           Не маєте Аккаунта?
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate('RegistrationPage')}>
           <Text
-            style={{ color: '#EE6730', fontSize: 12, marginLeft: 5 }}
+            style={{ color: '#EE6730', fontSize: 12, marginLeft: 5}}
           >
             Зареєструватися
           </Text>

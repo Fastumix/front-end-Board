@@ -1,12 +1,22 @@
 import { StyleSheet } from "react-native";
-
 import { COLORS, FONT, SIZES } from "../../constants";
+import { useFonts } from "expo-font";
 
+const fonts = () =>{
+
+    const [fontsLoaded] = useFonts({
+        "Montserrat" : require("../../assets/fonts/Montserrat-Regular.ttf"),
+
+    });
+    if(!fontsLoaded){
+    return undefined;
+    }
+}
 const styles = StyleSheet.create({
     
     Button1:{
         fontSize: SIZES.medium,
-        fontFamily: FONT.regular,
+        fontFamily: 'Montserrat',
         color: 'black',
         backgroundColor: '#50A4A9',
         width: 330,
@@ -21,7 +31,7 @@ const styles = StyleSheet.create({
     Button2:{
         backgroundColor: '#EE6730',
         fontSize: SIZES.medium,
-        fontFamily: FONT.regular,
+        fontFamily: 'Montserrat',
         width: 330,
         marginTop: 40,
         height: 50,
@@ -32,7 +42,7 @@ const styles = StyleSheet.create({
     },
     Button3:{
         fontSize: SIZES.medium,
-        fontFamily: FONT.regular,
+        fontFamily: 'Montserrat',
         color: 'black',
         backgroundColor: '#7C7C7C',
         width: 330,
@@ -45,7 +55,7 @@ const styles = StyleSheet.create({
     },
     Button4:{
         fontSize: SIZES.medium,
-        fontFamily: FONT.regular,
+        fontFamily: 'Montserrat',
         color: 'black',
         backgroundColor: '#5DAD41',
         width: 330,
@@ -66,6 +76,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 100,
+        fontFamily: 'Montserrat',
       },
 
       Image:{

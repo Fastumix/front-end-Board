@@ -1,7 +1,17 @@
 import { StyleSheet } from "react-native";
-import { router } from "expo-router";
-
+import {useFonts} from "expo-font";
 import { COLORS, FONT, SIZES } from "../../../constants";
+
+const fonts = () =>{
+    const [fontsLoaded] = useFonts({
+        "Montserrat" : require("../../../assets/fonts/Montserrat-Regular.ttf"),
+        "Montserrat-Bold" : require("../../../assets/fonts/Montserrat-Bold.ttf"),
+        "Montserrat-Medium" : require("../../../assets/fonts/Montserrat-Medium.ttf"),
+    });
+    if(!fontsLoaded){
+      return undefined;
+    }
+  }
 
 const styles = StyleSheet.create({
     Container:{
@@ -12,7 +22,7 @@ const styles = StyleSheet.create({
         marginBottom: 0
     },
     Login:{  
-        fontFamily: FONT.regular,
+        fontFamily: 'Montserrat',
         fontSize: SIZES.medium,
         color: '#fff',
         borderStyle: 'solid',
@@ -26,7 +36,7 @@ const styles = StyleSheet.create({
     },
     Button:{
         fontSize: SIZES.medium,
-        fontFamily: FONT.regular,
+        fontFamily: 'Montserrat',
         color: 'black',
         backgroundColor: '#EE6730',
         width: 330,
@@ -44,5 +54,6 @@ const styles = StyleSheet.create({
         color: '#D9D9D9',
     }
 });
+
 
 export default styles;

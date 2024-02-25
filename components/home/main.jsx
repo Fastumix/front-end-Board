@@ -5,12 +5,13 @@ import football from '../../assets/images/FootBall.png';
 import basketball from '../../assets/images/Basketball.png';
 import { useNavigation } from '@react-navigation/native';
 import styles from './main.style';
+
 const Main = () => {
     const navigation = useNavigation();
     return (
       <SafeAreaView style={styles.Container}>
         
-        <TouchableOpacity style={styles.Button1}>
+        <TouchableOpacity style={styles.Button1} onPress={() => navigation.navigate('VolleyBallPage')}>
             <Image
             style={styles.Image}
             source={volley}

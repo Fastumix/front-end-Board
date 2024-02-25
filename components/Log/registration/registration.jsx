@@ -3,7 +3,6 @@ import { TextInput, TouchableOpacity, View, Text, SafeAreaView, ActivityIndicato
 import styles from './registratyion.style';
 import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_AUTH, fetchSignInMethodsForEmail } from '../../../firebase/firebase';
-import { database, ref, set } from 'firebase/database';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 
 const Registration = () => {
@@ -15,7 +14,6 @@ const Registration = () => {
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
 
-  
 
   const handleRegistration = async () => {
     try {

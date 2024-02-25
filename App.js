@@ -8,6 +8,7 @@ import LoginPage from './app/LoginPage';
 import RegistrationPage from './app/RegistrationPage'
 import styles from './styles/search';
 import MainPage from './app/MainPage';
+import VolleyBallPage  from './app/VolleyBallPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -21,12 +22,16 @@ const App = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen 
-        name="RegistrationPage" component={RegistrationPage}
-        options={{ headerShown: false }} 
+          name="RegistrationPage" component={RegistrationPage}
+          options={{ headerShown: false }} 
         />
         <Stack.Screen 
-        name="MainPage" component={MainPage}
-        options={{ headerShown: false }} 
+          name="MainPage" component={MainPage}
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="VolleyBallPage" component={VolleyBallPage}
+          options={{ headerShown: false }} 
         />
       </Stack.Navigator>
     </NavigationContainer>

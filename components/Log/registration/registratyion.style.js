@@ -3,15 +3,27 @@ import { router } from "expo-router";
 
 import { COLORS, FONT, SIZES } from "../../../constants";
 
+const fonts = () =>{
+
+    const [fontsLoaded] = useFonts({
+        "Montserrat" : require("../../../assets/fonts/Montserrat-Regular.ttf"),
+
+    });
+    if(!fontsLoaded){
+    return undefined;
+    }
+}
+
 const styles = StyleSheet.create({
     Container:{
+        fontFamily: 'Montserrat',
         maxWidth: 330,
         marginLeft: 'auto',
         marginRight: 'auto',
         marginBottom: 0
     },
     Login:{  
-        fontFamily: FONT.regular,
+
         fontSize: SIZES.medium,
         color: '#fff',
         borderStyle: 'solid',
@@ -25,7 +37,7 @@ const styles = StyleSheet.create({
     },
     Button:{
         fontSize: SIZES.medium,
-        fontFamily: FONT.regular,
+        fontFamily: 'Montserrat',
         color: 'black',
         backgroundColor: '#EE6730',
         width: 330,
