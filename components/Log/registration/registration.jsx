@@ -4,6 +4,8 @@ import styles from './registratyion.style';
 import { useNavigation } from '@react-navigation/native';
 import { FIREBASE_AUTH, fetchSignInMethodsForEmail } from '../../../firebase/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useFonts } from 'expo-font';
+
 
 const Registration = () => {
   const navigation = useNavigation();
@@ -14,6 +16,16 @@ const Registration = () => {
   const [loading, setLoading] = useState(false);
   const auth = FIREBASE_AUTH;
 
+
+  const [fontsLoaded] = useFonts({
+    "Montserrat" : require("../../../assets/fonts/Montserrat-Regular.ttf"),
+    "Montserrat-Bold" : require("../../../assets/fonts/Montserrat-Bold.ttf"),
+    "Montserrat-Medium" : require("../../../assets/fonts/Montserrat-Medium.ttf"),
+  });
+  if(!fontsLoaded){
+    return undefined;
+  }
+  
 
   const handleRegistration = async () => {
     try {
@@ -43,21 +55,51 @@ const Registration = () => {
   return (
     <SafeAreaView style={styles.Container}>
       <TextInput
-        style={styles.Login}
+        style={{
+          fontFamily: 'Montserrat',
+          color: '#fff',
+          borderStyle: 'solid',
+          borderColor: '#D9D9D9',
+          borderBottomWidth: 1,
+          justifyContent: 'center',
+          opacity: 0.6,
+          marginTop: 40,
+          paddingBottom:8,
+        }}
         placeholder='  E-mail'
         placeholderTextColor='#fff'
         onChangeText={(text) => setEmail(text)}
         value={email}
       />
       <TextInput
-        style={styles.Login}
+        style={{
+          fontFamily: 'Montserrat',
+          color: '#fff',
+          borderStyle: 'solid',
+          borderColor: '#D9D9D9',
+          borderBottomWidth: 1,
+          justifyContent: 'center',
+          opacity: 0.6,
+          marginTop: 40,
+          paddingBottom:8,
+        }}
         placeholder='  Логін'
         placeholderTextColor='#fff'
         onChangeText={(text) => setUsername(text)}
         value={username}
       />
       <TextInput
-        style={styles.Login}
+        style={{
+          fontFamily: 'Montserrat',
+          color: '#fff',
+          borderStyle: 'solid',
+          borderColor: '#D9D9D9',
+          borderBottomWidth: 1,
+          justifyContent: 'center',
+          opacity: 0.6,
+          marginTop: 40,
+          paddingBottom:8,
+        }}
         placeholder='  Пароль'
         placeholderTextColor='#fff'
         secureTextEntry={true}
@@ -65,7 +107,17 @@ const Registration = () => {
         value={password}
       />
       <TextInput
-        style={styles.Login}
+        style={{
+          fontFamily: 'Montserrat',
+          color: '#fff',
+          borderStyle: 'solid',
+          borderColor: '#D9D9D9',
+          borderBottomWidth: 1,
+          justifyContent: 'center',
+          opacity: 0.6,
+          marginTop: 40,
+          paddingBottom:8,
+        }}
         placeholder='  Повторіть Пароль'
         placeholderTextColor='#fff'
         secureTextEntry={true}
@@ -81,16 +133,16 @@ const Registration = () => {
           {loading ? (
             <ActivityIndicator size="small" color="#ffffff" />
           ) : (
-            <Text style={{ fontWeight: 500 }}>Зареєструватися</Text>
+            <Text style={{ fontWeight: 500, fontFamily: 'Montserrat-Medium'}}>Зареєструватися</Text>
           )}
         </TouchableOpacity>
 
       <View style={styles.RegisterContainer}>
-        <Text style={{ color: '#D9D9D9', fontSize: 12, textAlign: 'center' }}>
+        <Text style={{ color: '#D9D9D9', fontSize: 12, textAlign: 'center', fontFamily: 'Montserrat' }}>
           Вже зареєстровані?
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate('LoginPage')}>
-          <Text style={{ color: '#EE6730', fontSize: 12, marginLeft: 5 }}>Увійти</Text>
+          <Text style={{ color: '#EE6730', fontSize: 12, marginLeft: 5, fontFamily: 'Montserrat'}}>Увійти</Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

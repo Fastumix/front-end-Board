@@ -3,6 +3,7 @@ import { Image, TouchableOpacity, View, Text, SafeAreaView, ActivityIndicator, A
 import volley from '../../assets/images/Volleyball.png';
 import football from '../../assets/images/FootBall.png';
 import basketball from '../../assets/images/Basketball.png';
+import tennis from '../../assets/images/Tennis.png'
 import { useNavigation } from '@react-navigation/native';
 import styles from './main.style';
 
@@ -11,7 +12,7 @@ const Main = () => {
     return (
       <SafeAreaView style={styles.Container}>
         
-        <TouchableOpacity style={styles.Button1} onPress={() => navigation.navigate('VolleyBallPage')}>
+        <TouchableOpacity style={styles.Button1} onPress={() => navigation.navigate('VolleyBallTeam')}>
             <Image
             style={styles.Image}
             source={volley}
@@ -38,14 +39,14 @@ const Main = () => {
         <TouchableOpacity style={styles.Button4}>
             <Image
             style={styles.Image}
-            source={volley}
+            source={tennis}
             />
             <Text style={{fontWeight:'500'}}>Теніс</Text>
         </TouchableOpacity>
 
 
-        <TouchableOpacity style={styles.ExitButton}>
-            <Text style={{color:'#D21404'}} onPress={() => navigation.navigate('LoginPage')}>Вихід</Text>
+        <TouchableOpacity style={styles.ExitButton} onPress={() => navigation.navigate('LoginPage')}>
+            <Text style={{color:'#D21404'}} >Вихід</Text>
         </TouchableOpacity>
 
       </SafeAreaView>

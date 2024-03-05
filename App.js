@@ -9,6 +9,7 @@ import RegistrationPage from './app/RegistrationPage'
 import styles from './styles/search';
 import MainPage from './app/MainPage';
 import VolleyBallPage  from './app/VolleyBallPage';
+import VolleyBallTeam from './app/VolleyBallTeam';
 
 const Stack = createNativeStackNavigator();
 
@@ -31,6 +32,10 @@ const App = () => {
         />
         <Stack.Screen 
           name="VolleyBallPage" component={VolleyBallPage}
+          options={{ headerShown: false }} 
+        />
+        <Stack.Screen 
+          name="VolleyBallTeam" component={VolleyBallTeam}
           options={{ headerShown: false }} 
         />
       </Stack.Navigator>

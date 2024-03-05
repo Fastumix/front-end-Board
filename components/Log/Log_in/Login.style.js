@@ -15,11 +15,11 @@ const fonts = () =>{
 
 const styles = StyleSheet.create({
     Container:{
-        maxWidth: 330,
+        width: 330,
         marginLeft: 'auto',
         marginRight: 'auto',
         marginTop: 80,
-        marginBottom: 0
+        marginBottom: 0,
     },
     Login:{  
         fontFamily: 'Montserrat',

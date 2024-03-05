@@ -4,6 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import styles from './Login.style';
 import { FIREBASE_AUTH} from '../../../firebase/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useFonts } from 'expo-font';
 
 const Login = () => {
   const navigation = useNavigation();
@@ -13,9 +14,14 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const auth = FIREBASE_AUTH
 
-
-  
-
+  const [fontsLoaded] = useFonts({
+    "Montserrat" : require("../../../assets/fonts/Montserrat-Regular.ttf"),
+    "Montserrat-Bold" : require("../../../assets/fonts/Montserrat-Bold.ttf"),
+    "Montserrat-Medium" : require("../../../assets/fonts/Montserrat-Medium.ttf"),
+  });
+  if(!fontsLoaded){
+    return undefined;
+  }
 
 
   const handleLogin = async () => {
@@ -36,13 +42,33 @@ const Login = () => {
   return (
     <SafeAreaView style={styles.Container}>
       <TextInput
-        style={styles.Login}
+        style={{
+        fontFamily: 'Montserrat',
+        color: '#fff',
+        borderStyle: 'solid',
+        borderColor: '#D9D9D9',
+        borderBottomWidth: 1,
+        justifyContent: 'center',
+        opacity: 0.6,
+        marginTop: 40,
+        paddingBottom:8,
+      }}
         placeholder='  Логін'
         placeholderTextColor='#fff'
         onChangeText={(text) => setEmail(text)}
       />
       <TextInput
-        style={styles.Login}
+        style={{
+          fontFamily: 'Montserrat',
+          color: '#fff',
+          borderStyle: 'solid',
+          borderColor: '#D9D9D9',
+          borderBottomWidth: 1,
+          justifyContent: 'center',
+          opacity: 0.6,
+          marginTop: 40,
+          paddingBottom:8,
+        }}
         placeholder='  Пароль'
         placeholderTextColor='#fff'
         secureTextEntry={true}
@@ -56,7 +82,7 @@ const Login = () => {
         onPress={handleLogin}
         
       >
-        <Text style={{ fontWeight: 500}}>
+        <Text style={{fontFamily: 'Montserrat-Medium'}}>
           Увійти
         </Text>
       </TouchableOpacity>
@@ -64,18 +90,18 @@ const Login = () => {
       }
 
       <TouchableOpacity style={{ alignItems: 'center', marginTop: 15 }}>
-        <Text style={{ color: '#EE6730' }}>
+        <Text style={{ color: '#EE6730', fontFamily: 'Montserrat'}}>
           Забули пароль?
         </Text>
       </TouchableOpacity>
 
       <View style={styles.RegisterContainer}>
-        <Text style={{ color: '#D9D9D9', fontSize: 12, textAlign: 'center'}}>
+        <Text style={{ color: '#D9D9D9', fontSize: 12, textAlign: 'center', fontFamily: 'Montserrat'}}>
           Не маєте Аккаунта?
         </Text>
         <TouchableOpacity onPress={() => navigation.navigate('RegistrationPage')}>
           <Text
-            style={{ color: '#EE6730', fontSize: 12, marginLeft: 5}}
+            style={{ color: '#EE6730', fontSize: 12, marginLeft: 5, fontFamily: 'Montserrat'}}
           >
             Зареєструватися
           </Text>

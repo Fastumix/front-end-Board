@@ -1,36 +1,385 @@
-import { Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Text, TouchableOpacity, View, Modal } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { useFonts } from 'expo-font';
+import Svg, { Path} from "react-native-svg"
+import styles from './VolleyBall.style';
+import { useNavigation, useRoute } from '@react-navigation/native';
 
 
 const VolleyBall = () => {
-  
+    const navigation = useNavigation();
+    const route = useRoute();
+    const team1 = route.params?.team1 || 'Default Team 1';
+    const team2 = route.params?.team2 || 'Default Team 2';
+    const [timer, setTimer] = useState(0);
+    const [timer2, setTimer2] = useState(0);
+    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [setsResults, setSetsResults] = useState([]);
+    const [fontsLoaded] = useFonts({
+        "Montserrat" : require("../../../assets/fonts/Montserrat-Regular.ttf"),
+        "Montserrat-Medium" : require("../../../assets/fonts/Montserrat-Medium.ttf"),
+    });
+    if(!fontsLoaded){
+    return undefined;
+    }
+    const [CountSets, setCountSets] = useState(1);
+    const [isPause, setIsPaused] = useState(true);
+    const [isPause2, setIsPaused2] = useState(true);
+    const [Counter, setCounter] = useState(0);
+    const [Counter2, setCounter2] = useState(0);
+
+    const formatTime = (timeInSeconds) => {
+        const minutes = Math.floor(timeInSeconds / 60);
+        const seconds = timeInSeconds % 60;
+        const formattedMinutes = String(minutes).padStart(2, '0');
+        const formattedSeconds = String(seconds).padStart(2, '0');
+        return `${formattedMinutes}:${formattedSeconds}`;
+    };
+
+    useEffect(() => {
+        let interval;
+        if (isPause && isPause2) {
+            interval = setInterval(() => {
+                setTimer((prevTime) => prevTime + 1);
+            }, 1000);
+        }
+        return () => clearInterval(interval);
+    }, [isPause, isPause2]);
+
+    useEffect(() => {
+        let interval;
+        if (isPause2 && isPause) {
+            interval = setInterval(() => {
+                setTimer2((prevTime) => prevTime + 1);
+            }, 1000);
+        }
+        return () => clearInterval(interval);
+    }, [isPause, isPause2]);
+
+    useEffect(() => {
+        if (CountSets === 4) {
+            setIsModalVisible(true);
+        }
+        else {
+            if(CountSets === 6){
+                
+            }
+        }
+    }, [CountSets]);
+
+    const handleEndGame = () => {
+        navigation.navigate('MainPage');
+        setIsModalVisible(false);
+    };
+
+
+    const handleContinue = () => {
+
+        setCountSets(1);
+        setCounter(0);
+        setCounter2(0);
+        setIsModalVisible(false);
+    };
+
+
+    const handleCounterPress = () => {
+        if (isPause && isPause2) {
+            setCounter((prevCount) => prevCount + 1);
+            if (Counter === 24 && Counter2 === 24) {
+                if (Counter2 - Counter >= 2) {
+                    setCounter(0);
+                    setCounter2(0);
+                    setCountSets((prevSets) => prevSets + 1);
+                    setIsPaused(true);
+                    setIsPaused2(true);
+
+                    setSetsResults((prevResults) => [
+                        ...prevResults,
+                        { team1: Counter, team2: Counter2 },
+                    ]);
+                }
+            } else if (Counter === 25) {
+                setCounter(0);
+                setCounter2(0);
+                setCountSets((prevSets) => prevSets + 1);
+                setIsPaused(true);
+                setIsPaused2(true);
+
+                setSetsResults((prevResults) => [
+                    ...prevResults,
+                    { team1: Counter, team2: Counter2 },
+                ]);
+            }
+        }
+    };
+
+    const handleCounterPress2 = () => {
+        if (isPause && isPause2) {
+            setCounter2((prevCount) => prevCount + 1);
+            if (Counter === 24 && Counter2 === 24) {
+                if (Counter - Counter2 >= 2) {
+                    setCounter(0);
+                    setCounter2(0);
+                    setCountSets((prevSets) => prevSets + 1);
+                    setIsPaused(true);
+                    setIsPaused2(true);
+
+    
+                    setSetsResults((prevResults) => [
+                        ...prevResults,
+                        { team1: Counter, team2: Counter2 },
+                    ]);
+                }
+            } else if (Counter2 === 25) {
+                setCounter(0);
+                setCounter2(0);
+                setCountSets((prevSets) => prevSets + 1);
+                setIsPaused(true);
+                setIsPaused2(true);;
+
+                setSetsResults((prevResults) => [
+                    ...prevResults,
+                    { team1: Counter, team2: Counter2 },
+                ]);
+            }
+        }
+    };
+
+    const handleMinusCounterPress = () => {
+        if (Counter != 0){
+            setCounter((prevCount) => prevCount - 1);
+            if (Counter === 24 && Counter2 === 24) {
+                if (Counter2 - Counter >= 2) {
+                    setCounter(0);
+                    setCounter2(0);
+                    setCountSets((prevSets) => prevSets + 1);
+                    setIsPaused(true);
+                    setIsPaused2(true);
+                }
+            } else if (Counter === 25) {
+                setCounter(0);
+                setCounter2(0);
+                setCountSets((prevSets) => prevSets + 1);
+                setIsPaused(true);
+                setIsPaused2(true);
+            }
+        }
+    };
+
+    const handleMinusCounterPress2 = () => {
+        if(Counter2 !=0 ){
+            setCounter2((prevCount) => prevCount - 1);
+            if (Counter === 24 && Counter2 === 24) {
+                if (Counter - Counter2 >= 2) {
+                    setCounter(0);
+                    setCounter2(0);
+                    setCountSets((prevSets) => prevSets + 1);
+                    setIsPaused(true);
+                    setIsPaused2(true);
+                }
+            } else if (Counter2 === 25) {
+                setCounter(0);
+                setCounter2(0);
+                setCountSets((prevSets) => prevSets + 1);
+                setIsPaused(true);
+                setIsPaused2(true);
+            }
+        }
+    };
+
+    const handlePauseButtonPress = () => {
+        if (isPause2) {
+            setIsPaused((prevState) => !prevState);
+        }
+    };
+
+    const handlePauseButtonPress2 = () => {
+        if (isPause) {
+            setIsPaused2((prevState) => !prevState);
+        }
+    };
+
     return (
       <View>
+
+        
         <View style={{backgroundColor:'#EE6730', height: 370, borderRadius:15 }}>
 
 
-            <View style={{display:'flex', flexDirection:'row', justifyContent:'space-around'}}>
-                <Text style={{ marginTop: 25}}>
-                    Команда 1
-                </Text>
+            <View style={{display:'flex', flexDirection:'row', justifyContent:"space-between"}}>
+                <View style={{ backgroundColor:'black', width:130, height:75, borderBottomRightRadius: 30}}>
+                    <Text style={{color:"white", textAlign:'center', marginTop:35, fontFamily:'Montserrat-Medium'}}>{team1}</Text>
+                </View>
 
                 <View style={{display:'flex', alignItems:'center'}}>
-                    <Text style={{color:'white',  marginTop: 25}}>
+                    <Text style={{color:'white',  marginTop: 25, fontSize: 17, fontFamily:'Montserrat-Medium'}}>
                         Таймер
                     </Text>
-                    <Text>
-                        00 : 00
+                    <Text style={{fontWeight: '500', fontSize:24, fontFamily:'Montserrat'}}>
+                        {formatTime(timer)}
                     </Text>
                 </View>
 
-                <Text style={{ marginTop: 25}}>
-                    Команда 2
-                </Text>
+                <View style={{backgroundColor:'white', width:130, height: 75, borderBottomLeftRadius: 30}}>
+                  <Text style={{textAlign:'center', marginTop:35, fontFamily:'Montserrat-Medium'}}>{team2}</Text>
+                </View>
+            </View>
+
+            <View style={{display:'flex', flexDirection:'row', justifyContent:'space-around', marginTop: 25}}>
+                <View style={{display:'flex', flexDirection: 'column', justifyContent:'center', alignItems: 'center'}}>
+                    <Text style={{fontSize:32, fontFamily:'Montserrat-Medium'}}>
+                        {Counter.toString().padStart(2, '0')}
+                    </Text>
+                    <TouchableOpacity 
+                    style={{
+                        backgroundColor:'black', width: 75, height: 75, borderRadius: 100, color: 'white', display:'flex', alignItems:'center', justifyContent:'center'
+                    }}
+                    onPress={handleCounterPress}
+                    >
+                        <Text style={{color:'white', fontFamily:'Montserrat-Medium', fontSize:20}}>
+                            +1
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+
+                <View style={{display: 'flex', alignItems:'center', justifyContent: 'center'}}>
+                    <Text style={{color:'white', fontFamily:'Montserrat-Medium', fontSize: 17}}>
+                        Сет
+                    </Text>
+                    <Text style={{fontSize: 24, fontFamily: 'Montserrat-Medium'}}>
+                        {CountSets}
+                    </Text>
+                </View>
+
+                <View style={{display:'flex', flexDirection: 'column', justifyContent:'center', alignItems: 'center'}}>
+                    <Text style={{fontSize: 32, fontFamily:'Montserrat-Medium'}}>
+                        {Counter2.toString().padStart(2, '0')}
+                    </Text>
+                    <TouchableOpacity 
+                    style={{
+                        backgroundColor:'white', width: 75, height: 75, borderRadius: 100, color: 'white', display:'flex', alignItems:'center', justifyContent:'center'
+                    }}
+                    onPress={handleCounterPress2}
+                    >
+                        <Text style={{color:'black', fontFamily:'Montserrat-Medium', fontSize: 20}}>
+                            +1
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+
+            <View style={{display:'flex', flexDirection: 'row', justifyContent:'space-around', alignItems:'center', gap: 100, marginTop: 10}}>
+                <TouchableOpacity style={styles.Minus_Button} onPress={handleMinusCounterPress}>
+                <Text style={{fontFamily:'Montserrat-Medium', color: 'white', fontSize: 20}}>-1</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.Minus_Button} onPress={handleMinusCounterPress2}>
+                    <Text style={{fontFamily:'Montserrat-Medium', color: 'white', fontSize: 20}}>-1</Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={{display:'flex', flexDirection:'row', justifyContent:'space-around', marginTop: 25}}>
+                <TouchableOpacity style={{
+                    backgroundColor:'black', width:165, height:50, borderRadius: 100, display:'flex', alignItems: 'center', justifyContent:"space-around", flexDirection:'row'
+                }}
+                onPress={handlePauseButtonPress}
+                >
+                    <Text style={{color:'white', fontFamily:'Montserrat-Medium'}}>
+                        {isPause ? 'Перерва' : 'Продовжити'}
+                    </Text>
+                    {
+                        isPause ? (
+                            <Svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <Path d="M1.66667 14C2.58333 14 3.33333 13.1 3.33333 12V2C3.33333 0.9 2.58333 0 1.66667 0C0.75 0 0 0.9 0 2V12C0 13.1 0.75 14 1.66667 14ZM6.66667 2V12C6.66667 13.1 7.41667 14 8.33333 14C9.25 14 10 13.1 10 12V2C10 0.9 9.25 0 8.33333 0C7.41667 0 6.66667 0.9 6.66667 2Z" fill="white"/>
+                            </Svg>
+                        )
+                        :
+                        (
+                        <Svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256">
+                            <Path fill="#fff" d="M240 128a15.74 15.74 0 0 1-7.6 13.51L88.32 229.65a16 16 0 0 1-16.2.3A15.86 15.86 0 0 1 64 216.13V39.87a15.86 15.86 0 0 1 8.12-13.82a16 16 0 0 1 16.2.3l144.08 88.14A15.74 15.74 0 0 1 240 128"/>
+                        </Svg>
+                        )
+                        
+                    }
+                </TouchableOpacity>
+
+                <TouchableOpacity style={{
+                    backgroundColor:'white', width:165, height:50, borderRadius: 100, display:'flex', alignItems: 'center', justifyContent:"space-around", flexDirection:'row'
+                }}
+                onPress={handlePauseButtonPress2}
+                >
+                    {
+                        isPause2 ?(
+                            <Svg width="10" height="14" viewBox="0 0 10 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <Path d="M1.66667 14C2.58333 14 3.33333 13.1 3.33333 12V2C3.33333 0.9 2.58333 0 1.66667 0C0.75 0 0 0.9 0 2V12C0 13.1 0.75 14 1.66667 14ZM6.66667 2V12C6.66667 13.1 7.41667 14 8.33333 14C9.25 14 10 13.1 10 12V2C10 0.9 9.25 0 8.33333 0C7.41667 0 6.66667 0.9 6.66667 2Z" fill="black"/>
+                            </Svg>
+                        )
+                        :
+                        (
+                            <Svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 256 256">
+                                <Path fill="#000" d="M240 128a15.74 15.74 0 0 1-7.6 13.51L88.32 229.65a16 16 0 0 1-16.2.3A15.86 15.86 0 0 1 64 216.13V39.87a15.86 15.86 0 0 1 8.12-13.82a16 16 0 0 1 16.2.3l144.08 88.14A15.74 15.74 0 0 1 240 128"/>
+                            </Svg>
+                        )
+
+                    }
+                    <Text style={{color:'black', fontFamily:'Montserrat-Medium', fontWeight:'500'}}>
+                        {isPause2 ? 'Перерва' : 'Продовжити'}
+                    </Text>
+                    
+                    
+                    
+                </TouchableOpacity>
             </View>
 
 
         </View>
 
+        <View style={styles.SetContainer}>
+                <Text style={{ fontFamily: 'Montserrat-Medium', marginTop: 5, color: 'white' }}>
+                    Рахунок сету
+                </Text>
+
+                <View>
+                    {setsResults.map((setResult, index) => (
+                        <View key={index} style={{ display: 'flex', gap: 15, flexDirection: 'row', marginTop: 20 }}>
+                            <Text style={{ color: 'white', fontFamily: 'Montserrat-Medium' }}>{team1}</Text>
+                            <Text style={{ fontFamily: 'Montserrat-Medium' }}>
+                                {setResult.team1} : {setResult.team2}
+                            </Text>
+                            <Text style={{ color: 'white', fontFamily: 'Montserrat-Medium' }}>{team2}</Text>
+                        </View>
+                    ))}
+                </View>
+            </View>
+    
+        <View style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: 20}}>
+            <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('MainPage')}>
+                <Text style={{color:"#D21404", fontFamily: 'Montserrat-Medium'}}>Назад</Text>
+            </TouchableOpacity>
+        </View>
+
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={isModalVisible}
+                onRequestClose={() => {
+                    setIsModalVisible(false);
+                }}
+            >
+                <View style={styles.modalContainer}>
+                    <View style={styles.modalContent}>
+                        <Text style={{fontSize:20, fontFamily:"Montserrat-Medium", color:'white'}}>Гра завершена, бажаєте продовжити?</Text>
+                        <View style={styles.modalButtons}>
+                            <TouchableOpacity onPress={handleContinue} style={styles.modalButton}>
+                                <Text style={{fontSize:20, fontFamily:"Montserrat-Medium", color:'white'}}>Так</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={handleEndGame} style={styles.modalButton}>
+                                <Text style={{fontSize:20, fontFamily:"Montserrat-Medium", color:'white'}}>Ні</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </View>
+        </Modal>
 
       </View>
     )
