@@ -1,6 +1,8 @@
 import { initializeApp } from 'firebase/app';
-import {getAuth} from 'firebase/auth';
-import { getDatabase } from 'firebase/database';
+import {initializeAuth,  getReactNativePersistence} from 'firebase/auth';
+import { getDatabase, ref, push, set } from 'firebase/database';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyA4LYw5E6QzF3W7PFy58wgVXvmshKGhNg4",
@@ -14,5 +16,35 @@ const firebaseConfig = {
 };
 
 export const FIREBASE_APP = initializeApp(firebaseConfig);
-export const FIREBASE_AUTH = getAuth(FIREBASE_APP);
+export const FIREBASE_AUTH = initializeAuth(FIREBASE_APP, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+});
 export const FIREBASE_DB = getDatabase(FIREBASE_APP);
+
+const getGameResultsKey = (team1, team2, countSets) => {
+  return `${team1}_${team2}_set${countSets}`;
+};
+
+const getMatchKey = (team1, team2) => {
+  return `${team1}_${team2}`;
+};
+
+export const saveGameResults = (team1, team2, results1, results2, countSets, ended = false, Win, Win2, pause1, pause2, pauseCount, pauseCount2) => {
+  const matchKey = getMatchKey(team1, team2);
+  const gameResultsRef = ref(FIREBASE_DB, `matches/${matchKey}/gameResults/${getGameResultsKey(team1, team2, countSets)}`);
+  
+  set(gameResultsRef, {
+    team1: team1,
+    team2: team2,
+    results1: results1,
+    results2: results2,
+    set: countSets,
+    ended: results1 >= 25 || results2 >= 25,
+    win_team1: Win,
+    win_team2: Win2,
+    pause_team1: pause1,
+    pause_team2: pause2,
+    pauseCount_team1: pauseCount,
+    pauseCount_team2: pauseCount2
+  });
+};

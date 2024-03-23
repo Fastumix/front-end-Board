@@ -42,17 +42,23 @@ const styles = StyleSheet.create({
         borderRadius: 100,
         display: 'flex',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        
     },
     Minus_Button:{
         width: 120,
-        height:35,
+        height: 35,
         backgroundColor: '#D21404',
         borderRadius: 100,
         display: 'flex',
         justifyContent: 'center',
-        alignItems:'center'
-    },
+        alignItems: 'center',
+        elevation: 8,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.4,
+        shadowRadius: 3, 
+    },    
     modalContainer:{
         display: 'flex',
         backgroundColor: '#000',

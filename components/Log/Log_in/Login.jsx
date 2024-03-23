@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { TextInput, TouchableOpacity, View, Text, SafeAreaView, Alert, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './Login.style';
 import { FIREBASE_AUTH} from '../../../firebase/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useFonts } from 'expo-font';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
   const navigation = useNavigation();
-  const [login, setLogin] = useState('');
   const [loading, setLoading] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -19,25 +19,49 @@ const Login = () => {
     "Montserrat-Bold" : require("../../../assets/fonts/Montserrat-Bold.ttf"),
     "Montserrat-Medium" : require("../../../assets/fonts/Montserrat-Medium.ttf"),
   });
-  if(!fontsLoaded){
-    return undefined;
-  }
 
+  useEffect(() => {
+    const checkLoggedIn = async () => {
+      const savedEmail = await AsyncStorage.getItem('email');
+      const savedPassword = await AsyncStorage.getItem('password');
+      if (savedEmail && savedPassword) {
+        try {
+          setLoading(true);
+          const response = await signInWithEmailAndPassword(auth, savedEmail, savedPassword);
+          console.log(response);
+          navigation.navigate('MainPage');
+        } catch (error) {
+          console.error(error);
+          // Handle error, e.g., credentials are no longer valid
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    checkLoggedIn();
+  }, []);
+  
 
   const handleLogin = async () => {
     setLoading(true);
     try {
-      const response = await  signInWithEmailAndPassword(auth, email, password);
+      const response = await signInWithEmailAndPassword(auth, email, password);
+      await AsyncStorage.setItem('email', email);
+      await AsyncStorage.setItem('password', password);
       console.log(response);
       navigation.navigate('MainPage');
     } catch (error) {
       console.error(error);
       Alert.alert('Помилка входу', 'Невірний логін або пароль. Спробуйте ще раз.');
-    }
-    finally{
+    } finally {
       setLoading(false);
     }
   };
+
+  if (!fontsLoaded) {
+    return null; // Return null or a loading indicator until fonts are loaded
+  }
 
   return (
     <SafeAreaView style={styles.Container}>
