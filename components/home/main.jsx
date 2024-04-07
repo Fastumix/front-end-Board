@@ -6,12 +6,25 @@ import basketball from '../../assets/images/Basketball.png';
 import tennis from '../../assets/images/Tennis.png'
 import { useNavigation } from '@react-navigation/native';
 import styles from './main.style';
+import { useFonts } from 'expo-font';
 
 const Main = () => {
     const navigation = useNavigation();
+
+    const [fontsLoaded] = useFonts({
+      "Montserrat" : require("../../assets/fonts/Montserrat-Regular.ttf"),
+      "Montserrat-Medium" : require("../../assets/fonts/Montserrat-Medium.ttf"),
+    });
+    if(!fontsLoaded){
+    return undefined;
+    }
     return (
       <SafeAreaView style={styles.Container}>
         
+        <TouchableOpacity style={[styles.Button3, {justifyContent:'center'}]} onPress={() => navigation.navigate('UniversalPage')}>
+            <Text style={{ fontFamily:'Montserrat-Medium'}}>Universal</Text>
+        </TouchableOpacity>
+
         <TouchableOpacity style={styles.Button1} onPress={() => navigation.navigate('VolleyBallTeam')}>
             <Image
             style={styles.Image}
@@ -26,14 +39,6 @@ const Main = () => {
             source={basketball}
             />
             <Text style={{fontWeight:'500'}}>Баскетбол</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.Button3}>
-            <Image
-            style={styles.Image}
-            source={football}
-            />
-            <Text style={{fontWeight:'500'}}>Футбол</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.Button4}>

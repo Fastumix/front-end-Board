@@ -4,6 +4,7 @@ import Registration from "./Log/registration/registration";
 import Main from "./home/main";
 import VolleyBall from "./Games/VolleyBall/VolleyBall";
 import TeamRegistration from "./Games/VolleyBall/TeamRegistration";
+import Universal from "./Games/Universal/Universal";
 
 export {
   Header,
@@ -11,5 +12,6 @@ export {
   Registration,
   Main,
   VolleyBall,
-  TeamRegistration
+  TeamRegistration,
+  Universal
 };

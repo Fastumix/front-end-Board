@@ -15,10 +15,10 @@ const fonts = () =>{
 
 const styles = StyleSheet.create({
     Container:{
-        width: 330,
+        width: '90%',
         marginLeft: 'auto',
         marginRight: 'auto',
-        marginTop: 80,
+        marginTop: '10%',
         marginBottom: 0,
     },
     Login:{  
@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat',
         color: 'black',
         backgroundColor: '#EE6730',
-        width: 330,
-        marginTop: 80,
+        width: '100%',
+        marginTop: '60%',
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',

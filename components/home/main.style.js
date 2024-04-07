@@ -19,8 +19,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat',
         color: 'black',
         backgroundColor: '#50A4A9',
-        width: 330,
-        marginTop: 40,
+        width: '95%',
+        marginTop: '12.5%',
         height: 50,
         alignItems: 'center',
 
@@ -32,8 +32,8 @@ const styles = StyleSheet.create({
         backgroundColor: '#EE6730',
         fontSize: SIZES.medium,
         fontFamily: 'Montserrat',
-        width: 330,
-        marginTop: 40,
+        width: '95%',
+        marginTop: '12.5%',
         height: 50,
         alignItems: 'center',
         borderRadius: 100,
@@ -45,8 +45,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat',
         color: 'black',
         backgroundColor: '#7C7C7C',
-        width: 330,
-        marginTop: 40,
+        width: '95%',
+        marginTop: '12.5%',
         height: 50,
         alignItems: 'center',
         borderRadius: 100,
@@ -58,8 +58,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat',
         color: 'black',
         backgroundColor: '#5DAD41',
-        width: 330,
-        marginTop: 40,
+        width: '95%',
+        marginTop: '12.5%',
         height: 50,
         alignItems: 'center',
         borderRadius: 100,
@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
         borderColor: '#D21404',
         borderStyle: 'solid',
         borderWidth: 2,  // товщина бордера
-        width: 330,
-        marginTop: 100,
+        width: '95%',
+        marginTop: '25%',
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
@@ -86,10 +86,13 @@ const styles = StyleSheet.create({
    
 
     Container:{
+        width:'90%',
         alignItems:'center',
         justifyContent: 'center',
         marginTop: 0,
         color: '#D9D9D9',
+        marginLeft:'auto',
+        marginRight:'auto'
     }
 });
 

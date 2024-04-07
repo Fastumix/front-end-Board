@@ -17,7 +17,7 @@ const fonts = () =>{
 const styles = StyleSheet.create({
     Container:{
         fontFamily: 'Montserrat',
-        maxWidth: 330,
+        width: '90%',
         marginLeft: 'auto',
         marginRight: 'auto',
         marginBottom: 0
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
         fontFamily: 'Montserrat',
         color: 'black',
         backgroundColor: '#EE6730',
-        width: 330,
-        marginTop: 80,
+        width: '100%',
+        marginTop: '40%',
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',

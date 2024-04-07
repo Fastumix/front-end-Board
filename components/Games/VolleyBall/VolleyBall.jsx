@@ -4,8 +4,7 @@ import { useFonts } from 'expo-font';
 import Svg, { Path} from "react-native-svg"
 import styles from './VolleyBall.style';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { saveGameResults } from '../../../firebase/firebase';
-
+import { saveGameResults, deletePreviousGameResults } from '../../../firebase/firebase';
 
 const VolleyBall = () => {
     const navigation = useNavigation();
@@ -76,12 +75,29 @@ const VolleyBall = () => {
         saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, 0, 0);
       }, [team1, team2, Counter, Counter2, CountSets, Win, Win2, isPause, isPause2]);
 
-    const handleEndGame = () => {
-        saveGameResults(team1, team2, Counter, Counter2, CountSets, true, isPause, isPause2, 0, 0);
-    
-        navigation.navigate('MainPage');
+      const handleEndGame = () => {
+
+        if (CountSets > 1) {
+            deletePreviousGameResults(team1, team2, CountSets - 1);
+        }
+
+        setTimer(0);
+        setTimer2(0);
         setIsModalVisible(false);
-      };
+        setSetsResults([]);
+        setCountSets(1);
+        setIsPaused(true);
+        setIsPaused2(true);
+        setCounter(0);
+        setCounter2(0);
+        setWin(0);
+        setWin2(0);
+        setCountPause(0);
+        setCountPause2(0);
+    
+        // Navigate back to the main page
+        navigation.navigate('MainPage');
+    };
 
     const handleContinue = () => {
 
@@ -91,36 +107,12 @@ const VolleyBall = () => {
         setCountPause2(0);
         setIsModalVisible(false);
     };
+
     const handleCounterPress = () => {
-        if (isPause && isPause2) {
-            setCounter((prevCount) => prevCount + 1);
-            if (Counter === 24 && Counter2 === 24) {
-                if (Counter - Counter2 >= 2) {
-                    setCounter(0);
-                    setCounter2(0);
-                    setCountSets((prevSets) => prevSets + 1);
-                    setIsPaused(true);
-                    setIsPaused2(true);
-                    setWin((prevWin) => prevWin + 1);
-                    setSetsResults((prevResults) => [
-                        ...prevResults,
-                        { team1: Counter, team2: Counter2 },
-                    ]);
-                    saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, CountPause, CountPause2);
-                } else if (Counter2 - Counter >= 2) {
-                    setCounter(0);
-                    setCounter2(0);
-                    setCountSets((prevSets) => prevSets + 1);
-                    setIsPaused(true);
-                    setIsPaused2(true);
-                    setWin2((prevWin) => prevWin + 1);
-                    setSetsResults((prevResults) => [
-                        ...prevResults,
-                        { team1: Counter, team2: Counter2 },
-                    ]);
-                    saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, CountPause, CountPause2);
-                }
-            } else if (Counter === 25) {
+    if (isPause && isPause2) {
+        setCounter((prevCount) => prevCount + 1);
+        if (Counter >= 24 && Counter2 >= 24) {
+            if (Counter - Counter2 >= 2) {
                 setCounter(0);
                 setCounter2(0);
                 setCountSets((prevSets) => prevSets + 1);
@@ -132,41 +124,7 @@ const VolleyBall = () => {
                     { team1: Counter, team2: Counter2 },
                 ]);
                 saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, CountPause, CountPause2);
-            }
-            saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, CountPause, CountPause2);
-        }
-    };
-    
-    const handleCounterPress2 = () => {
-        if (isPause && isPause2) {
-            setCounter2((prevCount) => prevCount + 1);
-            if (Counter === 24 && Counter2 === 24) {
-                if (Counter2 - Counter >= 2) {
-                    setCounter(0);
-                    setCounter2(0);
-                    setCountSets((prevSets) => prevSets + 1);
-                    setIsPaused(true);
-                    setIsPaused2(true);
-                    setWin2((prevWin) => prevWin + 1);
-                    setSetsResults((prevResults) => [
-                        ...prevResults,
-                        { team1: Counter, team2: Counter2 },
-                    ]);
-                    saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, CountPause, CountPause2);
-                } else if (Counter - Counter2 >= 2) {
-                    setCounter(0);
-                    setCounter2(0);
-                    setCountSets((prevSets) => prevSets + 1);
-                    setIsPaused(true);
-                    setIsPaused2(true);
-                    setWin((prevWin) => prevWin + 1);
-                    setSetsResults((prevResults) => [
-                        ...prevResults,
-                        { team1: Counter, team2: Counter2 },
-                    ]);
-                    saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, CountPause, CountPause2);
-                }
-            } else if (Counter2 === 25 ) {
+            } else if (Counter2 - Counter >= 2) {
                 setCounter(0);
                 setCounter2(0);
                 setCountSets((prevSets) => prevSets + 1);
@@ -179,58 +137,127 @@ const VolleyBall = () => {
                 ]);
                 saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, CountPause, CountPause2);
             }
+        } else if (Counter === 25) {
+            setCounter(0);
+            setCounter2(0);
+            setCountSets((prevSets) => prevSets + 1);
+            setIsPaused(true);
+            setIsPaused2(true);
+            setWin((prevWin) => prevWin + 1);
+            setSetsResults((prevResults) => [
+                ...prevResults,
+                { team1: Counter, team2: Counter2 },
+            ]);
             saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, CountPause, CountPause2);
         }
-    };
+        saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, CountPause, CountPause2);
+    }
+};
+
+const handleCounterPress2 = () => {
+    if (isPause && isPause2) {
+        setCounter2((prevCount) => prevCount + 1);
+        if (Counter >= 24 && Counter2 >= 24) {
+            if (Counter2 - Counter >= 2) {
+                setCounter(0);
+                setCounter2(0);
+                setCountSets((prevSets) => prevSets + 1);
+                setIsPaused(true);
+                setIsPaused2(true);
+                setWin2((prevWin) => prevWin + 1);
+                setSetsResults((prevResults) => [
+                    ...prevResults,
+                    { team1: Counter, team2: Counter2 },
+                ]);
+                saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, CountPause, CountPause2);
+            } else if (Counter - Counter2 >= 2) {
+                setCounter(0);
+                setCounter2(0);
+                setCountSets((prevSets) => prevSets + 1);
+                setIsPaused(true);
+                setIsPaused2(true);
+                setWin((prevWin) => prevWin + 1);
+                setSetsResults((prevResults) => [
+                    ...prevResults,
+                    { team1: Counter, team2: Counter2 },
+                ]);
+                saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, CountPause, CountPause2);
+            }
+        } else if (Counter2 === 25) {
+            setCounter(0);
+            setCounter2(0);
+            setCountSets((prevSets) => prevSets + 1);
+            setIsPaused(true);
+            setIsPaused2(true);
+            setWin2((prevWin) => prevWin + 1);
+            setSetsResults((prevResults) => [
+                ...prevResults,
+                { team1: Counter, team2: Counter2 },
+            ]);
+            saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, CountPause, CountPause2);
+        }
+        saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, CountPause, CountPause2);
+    }
+};
+
     
 
     const handleMinusCounterPress = () => {
-        if (Counter !== 0) {
+        if (Counter > 0) {
             setCounter((prevCount) => prevCount - 1);
-            if (Counter === 24 && Counter2 === 24) {
-                if (Counter2 - Counter >= 2) {
+            if (Counter === 25 && Counter2 === 25) {
+                if (Counter - Counter2 >= 2 && Counter > 0) {
                     setCounter(0);
                     setCounter2(0);
                     setCountSets((prevSets) => prevSets + 1);
                     setIsPaused(true);
                     setIsPaused2(true);
     
-                    saveGameResults(team1, team2, Counter, Counter2, CountSets);
+                    saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, 0, 0);
                 }
-            } else if (Counter === 25) {
-                setCounter(0);
-                setCounter2(0);
-                setCountSets((prevSets) => prevSets + 1);
-                setIsPaused(true);
-                setIsPaused2(true);
+            } else if (Counter === 25 && Counter2 !== 25) {
+                if (Counter - Counter2 >= 2 && Counter > 0) {
+                    setCounter(0);
+                    setCounter2(0);
+                    setCountSets((prevSets) => prevSets + 1);
+                    setIsPaused(true);
+                    setIsPaused2(true);
     
-                saveGameResults(team1, team2, Counter, Counter2, CountSets);
+                    saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, 0, 0);
+                }
+            } else if (Counter < 25) {
+                saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, 0, 0);
             }
-            saveGameResults(team1, team2, Counter, Counter2, CountSets);
         }
     };
+    
 
     const handleMinusCounterPress2 = () => {
-        if(Counter2 !=0 ){
+        if (Counter2 !== 0) {
             setCounter2((prevCount) => prevCount - 1);
-            if (Counter === 24 && Counter2 === 24) {
-                if (Counter - Counter2 >= 2) {
+            if (Counter === 25 && Counter2 === 25) {
+                if (Counter2 - Counter >= 2 && Counter2 > 0) {
                     setCounter(0);
                     setCounter2(0);
                     setCountSets((prevSets) => prevSets + 1);
                     setIsPaused(true);
                     setIsPaused2(true);
-                    saveGameResults(team1, team2, Counter, Counter2, CountSets);
+    
+                    saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, 0, 0);
                 }
-            } else if (Counter2 === 25) {
-                setCounter(0);
-                setCounter2(0);
-                setCountSets((prevSets) => prevSets + 1);
-                setIsPaused(true);
-                setIsPaused2(true);
-                saveGameResults(team1, team2, Counter, Counter2, CountSets);
+            } else if (Counter2 === 25 && Counter !== 25) {
+                if (Counter2 - Counter >= 2 && Counter2 > 0) {
+                    setCounter(0);
+                    setCounter2(0);
+                    setCountSets((prevSets) => prevSets + 1);
+                    setIsPaused(true);
+                    setIsPaused2(true);
+    
+                    saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, 0, 0);
+                }
+            } else if (Counter2 < 25) {
+                saveGameResults(team1, team2, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, 0, 0);
             }
-            saveGameResults(team1, team2, Counter, Counter2, CountSets);
         }
     };
 

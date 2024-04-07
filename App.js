@@ -10,6 +10,7 @@ import styles from './styles/search';
 import MainPage from './app/MainPage';
 import VolleyBallPage  from './app/VolleyBallPage';
 import VolleyBallTeam from './app/VolleyBallTeam';
+import UniversalPage from './app/UniversalPage';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,11 @@ const App = () => {
         <Stack.Screen 
           name="VolleyBallTeam" component={VolleyBallTeam}
           options={{ headerShown: false }} 
+        />
+        <Stack.Screen
+          name="UniversalPage"
+          component={UniversalPage}
+          options={{ headerShown: false }}
         />
       </Stack.Navigator>
     </NavigationContainer>

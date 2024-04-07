@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useFonts } from 'expo-font';
 import styles from './VolleyBall.style';
 import { useNavigation } from '@react-navigation/native';
+import { KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const TeamRegistration = () => {
     const navigation = useNavigation();
@@ -26,8 +27,9 @@ const TeamRegistration = () => {
         });
     };
     return (
+      <KeyboardAwareScrollView>
       <View style={{
-        width: 330,
+        width: '90%',
         marginLeft: 'auto',
         marginRight: 'auto',
         marginTop: 0,
@@ -48,7 +50,7 @@ const TeamRegistration = () => {
             borderBottomWidth: 1,
             justifyContent: 'center',
             opacity: 0.6,
-            marginTop: 80,
+            marginTop: '25%',
             paddingBottom:8,
           }}
         placeholder='  Назва команди 1'
@@ -64,7 +66,7 @@ const TeamRegistration = () => {
             borderBottomWidth: 1,
             justifyContent: 'center',
             opacity: 0.6,
-            marginTop: 60,
+            marginTop: '20%',
             paddingBottom:8,
           }}
         placeholder='  Назва команди 2'
@@ -80,7 +82,7 @@ const TeamRegistration = () => {
             backgroundColor: '#EE6730',
             height: 45,
             borderRadius: 50,
-            marginTop: 65
+            marginTop: '20%'
           }}
           onPress={handleTeamRegistration}
           >
@@ -88,7 +90,7 @@ const TeamRegistration = () => {
                 Зареєструвати команду
             </Text>
           </TouchableOpacity>
-        <View style={{display: 'flex', justifyContent:'center', alignItems: 'center', marginTop: 140}}>
+        <View style={{display: 'flex', justifyContent:'center', alignItems: 'center', marginTop: '40%'}}>
           <TouchableOpacity style={styles.Button} onPress={() => navigation.navigate('MainPage')}>
             <Text style={{color: '#D21404', fontFamily: 'Montserrat-Medium'}}>
                 Назад
@@ -96,6 +98,7 @@ const TeamRegistration = () => {
           </TouchableOpacity>
         </View>
       </View>
+      </KeyboardAwareScrollView>
     )
   }
 

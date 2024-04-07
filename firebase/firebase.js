@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import {initializeAuth,  getReactNativePersistence} from 'firebase/auth';
-import { getDatabase, ref, push, set } from 'firebase/database';
+import { getDatabase, ref, push, set, remove} from 'firebase/database';
 import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -47,4 +47,21 @@ export const saveGameResults = (team1, team2, results1, results2, countSets, end
     pauseCount_team1: pauseCount,
     pauseCount_team2: pauseCount2
   });
+};
+
+export const deletePreviousGameResults = (team1, team2, countSetsToDelete) => {
+  const matchKey = getMatchKey(team1, team2);
+  const matchesRef = ref(FIREBASE_DB, `matches/${matchKey}/gameResults`);
+
+  // Loop through the previous game results and delete them
+  for (let i = 2; i < countSetsToDelete; i++) {
+      const gameResultsRef = ref(matchesRef, getGameResultsKey(team1, team2, i));
+      remove(gameResultsRef)
+          .then(() => {
+              console.log(`Previous game result ${i} deleted successfully.`);
+          })
+          .catch((error) => {
+              console.error(`Error deleting previous game result ${i}:`, error);
+          });
+  }
 };
