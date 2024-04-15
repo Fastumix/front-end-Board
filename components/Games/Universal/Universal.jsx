@@ -16,7 +16,7 @@ import { Svg, Path } from 'react-native-svg';
     }
 
     return (      
-      <View >
+      <View style={styles.Container}>
         <StatusBar hidden={true} />
         {/* Timer Menu */}
         <View style={styles.TimerContainer}>
@@ -67,14 +67,16 @@ import { Svg, Path } from 'react-native-svg';
               <Path d="M26.8667 14C27.1179 15.6566 27.0071 17.3479 26.542 18.9576C26.0768 20.5672 25.2683 22.0569 24.1722 23.3241C23.0761 24.5913 21.7183 25.6059 20.1924 26.2981C18.6666 26.9902 17.0088 27.3434 15.3333 27.3334C8.83333 27.3334 3.66666 22.1667 3.66666 15.6667C3.66666 9.16669 8.83333 4.00002 15.3333 4.00002C16.5 4.00002 17.6167 4.16669 18.6667 4.48335V1.05002C17.6 0.80002 16.4833 0.666687 15.3333 0.666687C7 0.666687 0.333328 7.33335 0.333328 15.6667C0.333328 24 7 30.6667 15.3333 30.6667C17.4461 30.6755 19.5368 30.2359 21.4672 29.3772C23.3976 28.5184 25.1239 27.2599 26.5321 25.6847C27.9402 24.1096 28.9983 22.2537 29.6363 20.2395C30.2743 18.2253 30.4778 16.0987 30.2333 14H26.8667Z" fill="#7C7C7C"/>
             </Svg>
             <View style={{
-              padding:'10%',
+              height:'75%',
               width:'75%',
               backgroundColor:"#0D7AC7", 
               borderRadius:100, 
               position:'absolute', 
               right:'-25%', 
               top:'-25%',
-              zIndex:10
+              zIndex:10,
+              alignItems:'center',
+              justifyContent:'center'
             }}>
               <Text style={{color:'white', textAlign:'center', fontSize:12}}>
                 0
@@ -87,14 +89,15 @@ import { Svg, Path } from 'react-native-svg';
               <Path d="M26.8667 14C27.1179 15.6566 27.0071 17.3479 26.542 18.9576C26.0768 20.5672 25.2683 22.0569 24.1722 23.3241C23.0761 24.5913 21.7183 25.6059 20.1924 26.2981C18.6666 26.9902 17.0088 27.3434 15.3333 27.3334C8.83333 27.3334 3.66666 22.1667 3.66666 15.6667C3.66666 9.16669 8.83333 4.00002 15.3333 4.00002C16.5 4.00002 17.6167 4.16669 18.6667 4.48335V1.05002C17.6 0.80002 16.4833 0.666687 15.3333 0.666687C7 0.666687 0.333328 7.33335 0.333328 15.6667C0.333328 24 7 30.6667 15.3333 30.6667C17.4461 30.6755 19.5368 30.2359 21.4672 29.3772C23.3976 28.5184 25.1239 27.2599 26.5321 25.6847C27.9402 24.1096 28.9983 22.2537 29.6363 20.2395C30.2743 18.2253 30.4778 16.0987 30.2333 14H26.8667Z" fill="#7C7C7C"/>
             </Svg>
             <View style={{
-              padding:'10%',
+              height:'75%',
               width:'75%',
               backgroundColor:"#B20A0A", 
               borderRadius:100, 
               position:'absolute', 
               right:'-25%', 
               top:'-25%',
-              zIndex:10
+              zIndex:10,
+              justifyContent:'center'
             }}>
               <Text style={{color:'white', textAlign:'center', fontSize:12}}>
                 0
@@ -103,48 +106,49 @@ import { Svg, Path } from 'react-native-svg';
           </View>
         </View>
 
-        <View>
-          <View style={styles.ButtonContainerBlue}>
-            <TouchableOpacity style={styles.ButtonCounterBlue}>
+        <View style={{flexDirection:'column', height:'100%'}}>
+
+          <View style={[styles.ButtonContainerBlue]}>
+            <TouchableOpacity style={[styles.ButtonCounterBlue,]}>
               <Text style={{color:'white', fontSize:18}}>
                 +1
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.ButtonCounterBlue}>
+            <TouchableOpacity style={[styles.ButtonCounterRed, ]}>
               <Text style={{color:'white', fontSize:18}}>
                 +1
               </Text>
             </TouchableOpacity>
           </View>
 
-          <View style={styles.ButtonContainerRed}>
-            <View style={{flexDirection:'row'}}>
-              <TouchableOpacity style={styles.ButtonCounterBlue}>
-                  <Text style={{color:'white', fontSize:18}}>
+            <View style={{flexDirection:'row', justifyContent:'space-between', marginBottom:'-25%'}}>
+                <TouchableOpacity style={[styles.ButtonCounterBlue]}>
+                  <Text style={{color:'white', fontSize:18, textAlign:'center', }}>
                     +2
                   </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.ButtonCounterBlue}>
-                  <Text style={{color:'white', fontSize:18}}>
+                
+                <TouchableOpacity style={[styles.ButtonCounterRed,]}>
+                  <Text style={{color:'white', fontSize:18, textAlign:'center'}}>
+                    +2
+                  </Text>
+                </TouchableOpacity>
+            </View>
+
+            <View style={{flexDirection:'row', justifyContent:'space-evenly'}}>
+                <TouchableOpacity style={[styles.ButtonCounterBlue]}>
+                  <Text style={{color:'white', fontSize:18, textAlign:'center', }}>
+                    +3
+                  </Text>
+                </TouchableOpacity>
+                
+                <TouchableOpacity style={[styles.ButtonCounterRed]}>
+                  <Text style={{color:'white', fontSize:18, textAlign:'center'}}>
                     +3
                   </Text>
                 </TouchableOpacity>
             </View>
 
-            <View style={{flexDirection:'row'}}>
-              <TouchableOpacity style={styles.ButtonCounterBlue}>
-                  <Text style={{color:'white', fontSize:18}}>
-                    +2
-                  </Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.ButtonCounterBlue}>
-                  <Text style={{color:'white', fontSize:18}}>
-                    +3
-                  </Text>
-                </TouchableOpacity>
-            </View>
-
-          </View>
         </View>
 
       </View>

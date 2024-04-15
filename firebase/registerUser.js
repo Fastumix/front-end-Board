@@ -1,38 +1,24 @@
+import { initializeApp } from 'firebase/app';
+import {initializeAuth,  getReactNativePersistence} from 'firebase/auth';
+import { getDatabase, ref, push, set, remove} from 'firebase/database';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
-import { initializeApp, credential as _credential, firestore, auth } from "firebase-admin";
-import serviceAccount from "./credentials.json";
 
-
-initializeApp({
-  credential: _credential.cert(serviceAccount),
-  databaseURL: "https://sportapp-d031c-default-rtdb.europe-west1.firebasedatabase.app", // Replace with your Firebase project URL
-});
-
-// Reference to the Firestore collection
-const usersCollection = firestore().collection('users');
-
-// Function to register a user
-const registerUser = async (email, password, username) => {
-  try {
-    // Create a new user in Firebase Authentication
-    const userRecord = await auth().createUser({
-      email: email,
-      password: password,
-      displayName: username,
-    });
-
-    // Add additional user information to Firestore
-    await usersCollection.doc(userRecord.uid).set({
-      email: userRecord.email,
-      username: userRecord.displayName,
-    });
-
-    console.log('User registered successfully:', userRecord.uid);
-    return userRecord.uid;
-  } catch (error) {
-    console.error('Error registering user:', error.message);
-    throw error;
-  }
+const firebaseConfig = {
+  apiKey: "AIzaSyA4LYw5E6QzF3W7PFy58wgVXvmshKGhNg4",
+  authDomain: "sportapp-d031c.firebaseapp.com",
+  databaseURL: "https://sportapp-d031c-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "sportapp-d031c",
+  storageBucket: "sportapp-d031c.appspot.com",
+  messagingSenderId: "811513059992",
+  appId: "1:811513059992:web:86698d9ba53d650332ceed",
+  measurementId: "G-B81K4FWBEQ"
 };
 
-export default registerUser;
+const firebaseApp = initializeApp(firebaseConfig);
+const firebaseAuth = initializeAuth(firebaseApp, {
+        persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+      });
+const firebaseDB = getDatabase(firebaseApp);
+
+export default firebaseAuth;

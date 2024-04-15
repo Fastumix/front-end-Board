@@ -52,8 +52,7 @@ export const saveGameResults = (team1, team2, results1, results2, countSets, end
 export const deletePreviousGameResults = (team1, team2, countSetsToDelete) => {
   const matchKey = getMatchKey(team1, team2);
   const matchesRef = ref(FIREBASE_DB, `matches/${matchKey}/gameResults`);
-
-  // Loop through the previous game results and delete them
+  
   for (let i = 2; i < countSetsToDelete; i++) {
       const gameResultsRef = ref(matchesRef, getGameResultsKey(team1, team2, i));
       remove(gameResultsRef)

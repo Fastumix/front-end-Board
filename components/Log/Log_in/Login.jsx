@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TextInput, TouchableOpacity, View, Text, SafeAreaView, Alert, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './Login.style';
-import { FIREBASE_AUTH} from '../../../firebase/firebase';
+import { FIREBASE_AUTH } from '../../../firebase/firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useFonts } from 'expo-font';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -14,7 +14,7 @@ const Login = () => {
   const [loading, setLoading] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const auth = FIREBASE_AUTH
+  const auth = FIREBASE_AUTH;
   const [fontsLoaded] = useFonts({
     "Montserrat" : require("../../../assets/fonts/Montserrat-Regular.ttf"),
     "Montserrat-Bold" : require("../../../assets/fonts/Montserrat-Bold.ttf"),
@@ -84,7 +84,7 @@ const Login = () => {
           marginTop: 40,
           paddingBottom:8,
         }}
-          placeholder='  Логін'
+          placeholder='  Email'
           placeholderTextColor='#fff'
           onChangeText={(text) => setEmail(text)}
         />

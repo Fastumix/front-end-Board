@@ -5,14 +5,14 @@ import { router } from "expo-router";
 
 const styles = StyleSheet.create({
     Container:{
-        width: '90%',
+        width: '100%',
         marginLeft: 'auto',
         marginRight: 'auto',
     },
     TimerContainer:{
         width:'100%',
         flexDirection:'row',
-        justifyContent:'space-around'
+        justifyContent:'space-between'
     },
     TeamContainer:{
         paddingLeft:'10%',
@@ -21,9 +21,12 @@ const styles = StyleSheet.create({
         paddingBottom:'5%',
     },
     CounterContainer:{
+        width:'90%',
         flexDirection:'row',
         marginTop:'20%',
-        justifyContent:'space-around'
+        justifyContent:'space-around',
+        marginLeft:'auto',
+        marginRight:'auto'
     },
     TimerCounterContainer:{
         flexDirection:'row', 
@@ -31,33 +34,35 @@ const styles = StyleSheet.create({
         width:'90%',
         marginRight:'auto',
         marginLeft:'auto',
-        gap:150,
+        gap:100,
         marginTop:'10%'
     },
     ButtonContainerBlue:{
-        width:'90%',
         flexDirection:'row',
-        flexWrap:'wrap',
         justifyContent:'space-around',
-        marginTop:'10%',
-        marginLeft:'auto',
-        marginRight:'auto',
-        gap:100
+        marginBottom:'-20%'
     },
     ButtonContainerRed:{
         flexDirection:'row',
-        flexWrap:'wrap',
-        justifyContent:'space-between',
-        marginTop:'10%'
+        justifyContent:'space-around',
+        marginBottom:'-25%'
     },
     ButtonCounterBlue:{
-        paddingLeft: '6%',
-        paddingRight:'6%',
-        paddingBottom: '5%',
-        paddingTop:'5%',
         backgroundColor:'#0D7AC7',
-        borderRadius:100
-    }
+        borderRadius:100,
+        justifyContent:"center",
+        alignItems:'center',
+        width: '22%', 
+        height: '39%' 
+    },
+    ButtonCounterRed:{
+        backgroundColor:'#B20A0A',
+        borderRadius:100,
+        justifyContent:'center',
+        alignItems:'center',
+        width: '22%', 
+        height: '39%' 
+    },
    
 });
 
