@@ -8,17 +8,21 @@ const styles = StyleSheet.create({
         width: '100%',
         marginLeft: 'auto',
         marginRight: 'auto',
+        height:'100%'
     },
     TimerContainer:{
         width:'100%',
         flexDirection:'row',
-        justifyContent:'space-between'
+        justifyContent:'space-between',
+        
     },
     TeamContainer:{
-        paddingLeft:'10%',
-        paddingRight:'10%',
+        width: '30%',
         paddingTop:'5%',
         paddingBottom:'5%',
+        justifyContent:'center',
+        alignItems:'center', 
+        display: 'flex'
     },
     CounterContainer:{
         width:'90%',
@@ -40,28 +44,28 @@ const styles = StyleSheet.create({
     ButtonContainerBlue:{
         flexDirection:'row',
         justifyContent:'space-around',
-        marginBottom:'-20%'
+        marginBottom:'-30%'
     },
     ButtonContainerRed:{
         flexDirection:'row',
         justifyContent:'space-around',
-        marginBottom:'-25%'
+        marginBottom:'-30%'
     },
     ButtonCounterBlue:{
         backgroundColor:'#0D7AC7',
         borderRadius:100,
         justifyContent:"center",
         alignItems:'center',
-        width: '22%', 
-        height: '39%' 
+        width: '25%', 
+        height: '48%' 
     },
     ButtonCounterRed:{
         backgroundColor:'#B20A0A',
         borderRadius:100,
         justifyContent:'center',
         alignItems:'center',
-        width: '22%', 
-        height: '39%' 
+        width: '25%', 
+        height: '48%' 
     },
    
 });

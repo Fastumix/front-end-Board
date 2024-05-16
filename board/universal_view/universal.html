@@ -32,40 +32,36 @@
                 document.querySelector('.score-board:nth-child(2) #team2').innerText = data.team2;
                 document.querySelector('.score-board:nth-child(1) #score1').innerText = data.results1;
                 document.querySelector('.score-board:nth-child(2) #score2').innerText = data.results2;
-                document.querySelector('#team1_set').innerText = data.win_team1;
-                document.querySelector('#team2_set').innerText = data.win_team2;
-                document.querySelector('#time').innerText = formatTime(data.game_time);
                 document.querySelector('#set').innerText = data.set;
 
-                if(!data.pause_team1){
-                document.querySelector('#pause1').innerText = 'ТАЙМАУТ';
-                }
-                else {
+                // Форматування часу
+                const totalSeconds = parseInt(data.game_time);
+                const minutes = Math.floor(totalSeconds / 60);
+                const seconds = totalSeconds % 60;
+                const formattedTime = `${minutes.toString().padStart(2, '0')} : ${seconds.toString().padStart(2, '0')}`;
+                document.querySelector('.time').innerText = formattedTime;
+
+                if(data.pause_team1){
+                    document.querySelector('#pause1').innerText = 'ТАЙМАУТ';
+                } else {
                     document.querySelector('#pause1').innerText = '';
                 }
-                if(!data.pause_team2){
-                document.querySelector('#pause2').innerText = 'ТАЙМАУТ';
-                }
-                else {
+                if(data.pause_team2){
+                    document.querySelector('#pause2').innerText = 'ТАЙМАУТ';
+                } else {
                     document.querySelector('#pause2').innerText = '';
                 }
-                
             }
         };
 
         const urlParams = new URLSearchParams(window.location.search);
         const team1 = urlParams.get('team1');
         const team2 = urlParams.get('team2');
-        const matchKey = `${team1}_${team2}`;
-
-        const formatTime = (timeInSeconds) => {
-            const minutes = Math.floor(timeInSeconds / 60);
-            const seconds = timeInSeconds % 60;
-            return `${minutes.toString().padStart(2, '0')} : ${seconds.toString().padStart(2, '0')}`;
-        };
+        const type = urlParams.get('type');
+        const matchKey = `${team1}_${team2}_${type}`;
 
         const getSetResults = (setNumber) => {
-            const gameResultsRef = ref(db, `matches/${matchKey}/gameResults/${team1}_${team2}_set${setNumber}`);
+            const gameResultsRef = ref(db, `universal_matches/${matchKey}/gameResults/${team1}_${team2}_set${setNumber}`);
             onValue(gameResultsRef, (snapshot) => {
                 const data = snapshot.val();
                 if (data && !data.ended) {
@@ -99,13 +95,13 @@
         <p id="pause2" class="pause"></p>
     </div> 
     <div class="middle">
-        <p id="team1_set" class="set">0</p>
+
         <p id="set" class="count-set">1</p>
-        <p id="team2_set" class="set">0</p>
+
     </div>
     <div class="bottom">
         <h2 class="timer">TIMER</h2>
-        <p id="time" class="time">00 : 00</p>
+        <p class="time">00 : 00</p>
     </div>
 </main>
 </body>

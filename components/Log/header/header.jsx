@@ -1,10 +1,10 @@
-import {View, Image, TouchableOpacity } from "react-native";
+import {View, Image, TouchableOpacity, SafeAreaView } from "react-native";
 import header_logo from '../../../assets/images/header_logo.png';
 import headname from '../../../assets/images/header_name.png';
 
 const Header = () => {
   return (
-    <View style={{width: "100%", alignItems: "center"}}>
+    <SafeAreaView style={{width: "100%", alignItems: "center"}}>
         <Image
           style={{width:'100%'}}
           source={header_logo}
@@ -16,7 +16,7 @@ const Header = () => {
           />
           
         </TouchableOpacity>
-    </View>
+    </SafeAreaView>
   )
 }
  

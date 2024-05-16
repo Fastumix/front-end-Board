@@ -1,4 +1,4 @@
-import { Text, TouchableOpacity, View, Modal } from 'react-native';
+import { Text, TouchableOpacity, View, Modal, StatusBar } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import { useFonts } from 'expo-font';
 import Svg, {Path} from "react-native-svg"
@@ -6,7 +6,7 @@ import styles from './VolleyBall.style';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { saveGameResults, deletePreviousGameResults } from '../../../firebase/firebase';
 import { Game } from '../../../structure/game';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 const VolleyBall = () => {
@@ -45,6 +45,31 @@ const VolleyBall = () => {
         return `${formattedMinutes}:${formattedSeconds}`;
     };
 
+
+    useEffect(() => {
+    const saveGameState = async () => {
+        const gameState = {
+        timer, timer2, setsResults, CountSets, isPause, isPause2, Counter, Counter2, Win, Win2, CountPause, CountPause2
+        };
+        await AsyncStorage.setItem('gameState', JSON.stringify(gameState));
+    };
+
+    saveGameState();
+    }, [timer, timer2, setsResults, CountSets, isPause, isPause2, Counter, Counter2, Win, Win2, CountPause, CountPause2]);
+
+    // useEffect(() => {
+    //     const checkForSavedGame = async () => {
+    //       const gameState = await AsyncStorage.getItem('gameState');
+    //       if (gameState !== null) {
+    //         // Існує збережений стан гри
+    //         // Показати модальне вікно з опціями продовжити або почати нову гру
+    //         setIsModalVisible(true); // Припустимо, що у вас є стан isModalVisible для керування видимістю модального вікна
+    //       }
+    //     };
+      
+    //     checkForSavedGame();
+    //   }, []);
+
     useEffect(() => {
         let interval;
         if (isPause && isPause2) {
@@ -54,6 +79,12 @@ const VolleyBall = () => {
         }
         return () => clearInterval(interval);
     }, [isPause, isPause2]);
+
+    useEffect(() => {
+        if (Win === 2 || Win2 === 2) {
+            setIsModalVisible(true);
+        }
+    }, [Win, Win2]);
 
     useEffect(() => {
         let interval;
@@ -89,7 +120,8 @@ const VolleyBall = () => {
             isPause, 
             isPause2, 
             0, 
-            0
+            0,
+            timer
         );
 
       }, 
@@ -102,15 +134,11 @@ const VolleyBall = () => {
         Win, 
         Win2, 
         isPause, 
-        isPause2
+        isPause2,
+        timer
       ]);
 
-      const handleEndGame = () => {
-
-        if (CountSets > 1) {
-            deletePreviousGameResults(game.team1.name, game.team2.name, CountSets - 1);
-        }
-
+    const resetGame = () => {
         setTimer(0);
         setTimer2(0);
         setIsModalVisible(false);
@@ -124,13 +152,25 @@ const VolleyBall = () => {
         setWin2(0);
         setCountPause(0);
         setCountPause2(0);
-    
-        // Navigate back to the main page
         navigation.navigate('MainPage');
     };
 
-    const handleContinue = () => {
+    const handleEndGame = () => {
 
+        if (Win === 3 || Win2 === 3) {
+            alert(`Гра завершена. Переможець: ${Win === 3 ? game.team1.name : game.team2.name}`);
+            resetGame();
+            return;
+        }
+    
+        if (CountSets > 1) {
+            deletePreviousGameResults(game.team1.name, game.team2.name, CountSets - 1);
+        }
+
+        resetGame();
+    };
+
+    const handleContinue = () => {
         setCounter(0);
         setCounter2(0);
         setCountPause(0);
@@ -165,7 +205,8 @@ const VolleyBall = () => {
                         isPause, 
                         isPause2, 
                         CountPause, 
-                        CountPause2
+                        CountPause2,
+                        timer
                     );
 
                 } else if (Counter2 - Counter >= 2) {
@@ -191,7 +232,8 @@ const VolleyBall = () => {
                         isPause, 
                         isPause2, 
                         CountPause, 
-                        CountPause2
+                        CountPause2,
+                        timer
                     );
 
                 }
@@ -218,7 +260,9 @@ const VolleyBall = () => {
                     isPause, 
                     isPause2, 
                     CountPause, 
-                    CountPause2);
+                    CountPause2,
+                    timer
+                    );
 
             }
             saveGameResults(
@@ -233,7 +277,8 @@ const VolleyBall = () => {
                 isPause, 
                 isPause2, 
                 CountPause, 
-                CountPause2);
+                CountPause2,
+                timer);
 
         }
     };
@@ -265,7 +310,8 @@ const VolleyBall = () => {
                         isPause, 
                         isPause2, 
                         CountPause, 
-                        CountPause2
+                        CountPause2,
+                        timer
                         );
 
                 } else if (Counter - Counter2 >= 2) {
@@ -291,7 +337,8 @@ const VolleyBall = () => {
                         isPause, 
                         isPause2, 
                         CountPause, 
-                        CountPause2
+                        CountPause2,
+                        timer
                     );
                       
                 }
@@ -318,7 +365,9 @@ const VolleyBall = () => {
                     isPause, 
                     isPause2, 
                     CountPause, 
-                    CountPause2);
+                    CountPause2,
+                    timer
+                    );
             }
             saveGameResults(
                 game.team1.name, 
@@ -332,11 +381,11 @@ const VolleyBall = () => {
                 isPause, 
                 isPause2, 
                 CountPause, 
-                CountPause2);
+                CountPause2,
+                timer
+                );
         }
-    };
-
-    
+    };    
 
     const handleMinusCounterPress = () => {
         if (Counter > 0) {
@@ -360,7 +409,9 @@ const VolleyBall = () => {
                         Win2, 
                         isPause, 
                         isPause2, 
-                        0, 0
+                        0, 
+                        0,
+                        timer
                         );
                 }
             } else if (Counter === 25 && Counter2 !== 25) {
@@ -371,15 +422,40 @@ const VolleyBall = () => {
                     setIsPaused(true);
                     setIsPaused2(true);
     
-                    saveGameResults(game.team1.name, game.team2.name, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, 0, 0);
+                    saveGameResults(
+                        game.team1.name, 
+                        game.team2.name, 
+                        Counter, Counter2, 
+                        CountSets, 
+                        false,
+                        Win, 
+                        Win2, 
+                        isPause, 
+                        isPause2, 
+                        0, 
+                        0, 
+                        timer);
                 }
             } else if (Counter < 25) {
-                saveGameResults(game.team1.name, game.team2.name, Counter, Counter2, CountSets, false, Win, Win2, isPause, isPause2, 0, 0);
+                saveGameResults(
+                    game.team1.name, 
+                    game.team2.name, 
+                    Counter, 
+                    Counter2, 
+                    CountSets, 
+                    false, 
+                    Win, 
+                    Win2, 
+                    isPause, 
+                    isPause2, 
+                    0, 
+                    0, 
+                    timer
+                    );
             }
         }
     };
     
-
     const handleMinusCounterPress2 = () => {
         if (Counter2 !== 0) {
             setCounter2((prevCount) => prevCount - 1);
@@ -402,7 +478,8 @@ const VolleyBall = () => {
                         Win2, 
                         isPause, 
                         isPause2, 
-                        0, 0);
+                        0, 0,
+                        timer);
                 }
             } else if (Counter2 === 25 && Counter !== 25) {
                 if (Counter2 - Counter >= 2 && Counter2 > 0) {
@@ -423,7 +500,8 @@ const VolleyBall = () => {
                         Win2, 
                         isPause, 
                         isPause2, 
-                        0, 0);
+                        0, 0,
+                        timer);
                 }
             } else if (Counter2 < 25) {
                 saveGameResults(
@@ -437,7 +515,8 @@ const VolleyBall = () => {
                     Win2, 
                     isPause, 
                     isPause2, 
-                    0, 0);
+                    0, 0,
+                    timer);
             }
         }
     };
@@ -467,7 +546,7 @@ const VolleyBall = () => {
 
     return (
       <View>
-        
+        <StatusBar hidden={true} />
         <View style={{backgroundColor:'#EE6730', height: 370, borderRadius:15 }}>
 
 
@@ -630,7 +709,7 @@ const VolleyBall = () => {
             </TouchableOpacity>
         </View>
 
-            <Modal
+        <Modal
                 animationType="slide"
                 transparent={true}
                 visible={isModalVisible}

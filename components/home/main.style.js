@@ -93,7 +93,52 @@ const styles = StyleSheet.create({
         color: '#D9D9D9',
         marginLeft:'auto',
         marginRight:'auto'
-    }
+    },
+    modalContainer:{
+        display: 'flex',
+        backgroundColor: '#000',
+        alignItems:'center',
+        justifyContent:'center',
+        shadowColor:'#000',
+        padding: 35,
+        borderRadius: 20,
+        marginTop: '50%',
+        shadowOffset:{
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        borderWidth: 4,
+        borderColor:'#EE6730'
+    },
+    modalContent:{
+
+    },
+    modalButtons:{
+        marginTop: 10,
+        borderRadius: 10,
+        padding: 10,
+        elevation: 2,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-around'
+    },
+    modalButton:{
+       borderRadius: 10,
+       borderColor: '#EE6730',
+       borderWidth: 2,
+       padding: 5
+    },
+    iconContainer:{
+        position: 'absolute',
+        top: '-10%',
+        left:'50%',
+        right: 0,
+        backgroundColor: 'transparent',
+        padding: 16,
+      }
 });
 
 export default styles;

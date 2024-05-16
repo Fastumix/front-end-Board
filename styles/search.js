@@ -8,7 +8,8 @@ const styles = StyleSheet.create({
         marginBottom: 0,
         width: "100%",
         height: "100%",
-        backgroundColor: 'black'
+        backgroundColor: 'black',
+        flex:1
     },
     
     Login:{

@@ -135,7 +135,7 @@ const Login = () => {
         </>
       }
 
-      <TouchableOpacity style={{ alignItems: 'center', marginTop: 15 }}>
+      <TouchableOpacity style={{ alignItems: 'center', marginTop: 15 }} onPress={() => navigation.navigate('RestorePage')}>
         <Text style={{ color: '#EE6730', fontFamily: 'Montserrat'}}>
           Забули пароль?
         </Text>
