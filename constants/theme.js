@@ -1,3 +1,5 @@
+import { useFonts } from "expo-font";
+
 const COLORS = {
   primary: "#312651",
   secondary: "#444262",
@@ -10,9 +12,11 @@ const COLORS = {
   lightWhite: "#FAFAFC",
 };
 
-const FONT = {
-  regular: "Montserrat-Regular",
 
+const FONT = {
+  regular: "Montserrat",
+  bold: "Montserrat-Bold",
+  medium: "Montserrat-Medium"
 };
 
 const SIZES = {

@@ -1,18 +1,28 @@
 import { StyleSheet } from "react-native";
-import { router } from "expo-router";
-
+import {useFonts} from "expo-font";
 import { COLORS, FONT, SIZES } from "../../../constants";
+
+const fonts = () =>{
+    const [fontsLoaded] = useFonts({
+        "Montserrat" : require("../../../assets/fonts/Montserrat-Regular.ttf"),
+        "Montserrat-Bold" : require("../../../assets/fonts/Montserrat-Bold.ttf"),
+        "Montserrat-Medium" : require("../../../assets/fonts/Montserrat-Medium.ttf"),
+    });
+    if(!fontsLoaded){
+      return undefined;
+    }
+  }
 
 const styles = StyleSheet.create({
     Container:{
-        maxWidth: 330,
+        width: '90%',
         marginLeft: 'auto',
         marginRight: 'auto',
-        marginTop: 80,
-        marginBottom: 0
+        marginTop: '10%',
+        marginBottom: 0,
     },
     Login:{  
-        fontFamily: FONT.regular,
+        fontFamily: 'Montserrat',
         fontSize: SIZES.medium,
         color: '#fff',
         borderStyle: 'solid',
@@ -26,11 +36,11 @@ const styles = StyleSheet.create({
     },
     Button:{
         fontSize: SIZES.medium,
-        fontFamily: FONT.regular,
+        fontFamily: 'Montserrat',
         color: 'black',
         backgroundColor: '#EE6730',
-        width: 330,
-        marginTop: 80,
+        width: '100%',
+        marginTop: '60%',
         height: 40,
         justifyContent: 'center',
         alignItems: 'center',
@@ -44,5 +54,6 @@ const styles = StyleSheet.create({
         color: '#D9D9D9',
     }
 });
+
 
 export default styles;

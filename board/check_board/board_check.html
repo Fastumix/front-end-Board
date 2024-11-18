@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="./style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js"></script>
+    <script type="module" src="https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js"></script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.0.2/firebase-app.js';
+        import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/9.0.2/firebase-database.js';
+    
+        const firebaseConfig = {
+            apiKey: "AIzaSyA4LYw5E6QzF3W7PFy58wgVXvmshKGhNg4",
+            authDomain: "sportapp-d031c.firebaseapp.com",
+            databaseURL: "https://sportapp-d031c-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "sportapp-d031c",
+            storageBucket: "sportapp-d031c.appspot.com",
+            messagingSenderId: "811513059992",
+            appId: "1:811513059992:web:86698d9ba53d650332ceed",
+            measurementId: "G-B81K4FWBEQ"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        
+        const checkMatch = async (team1, team2) => {
+            const matchKey = `${team1}_${team2}`;
+            const matchRef = ref(db, `matches/${matchKey}`);
+            try {
+                const snapshot = await get(matchRef);
+                return snapshot.exists();
+            } catch (error) {
+                console.error("Error checking match:", error);
+                return false;
+            }
+        };
+        
+        document.getElementById('checkMatchBtn').addEventListener('click', async (event) => {
+            event.preventDefault();
+            const team1 = document.querySelector('.input:nth-of-type(1)').value;
+            const team2 = document.querySelector('.input:nth-of-type(2)').value;
+            if (team1.trim() !== '' && team2.trim() !== '') {
+                const matchExists = await checkMatch(team1, team2);
+                if (matchExists) {
+                    alert('Матч знайдено!');
+                    window.location.href = `../board_view/board.html?team1=${team1}&team2=${team2}`;
+                } else {
+                    alert('Матч не знайдено.');
+                }
+            } else {
+                alert('Будь ласка, введіть назви обох команд.');
+            }
+        });
+    </script>
+</head>
+<body>
+    <header class="header">
+        <nav>
+            <h2 style="color: white; text-align: center; margin-top: 80px">Під'єднатися до матчу</h2>
+            <p style="color: white;text-align: center; margin-top: 20px">Введіть назви команд</p>
+        </nav>
+    </header>
+    <main class="main">
+        <div>
+            <form class="form">
+                <div class="Inputs">
+                    <input style="padding: 5px 7px" class="input" type="text" placeholder="Назва команди 1">
+                    <input style="padding: 5px 7px" class="input" type="text" placeholder="Назва команди 2">
+                </div>
+                <button id="checkMatchBtn" class="button">Перевірити матч</button>
+            </form>
+        </div>
+    </main>
+</body>
+</html>
